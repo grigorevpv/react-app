@@ -10,7 +10,7 @@ class CommentList extends Component {
         const text = this.state.isOpen ? 'hide comments' : 'show comments'
         return (
             <div>
-                <button onClick = {this.toggleOpen}>{text}</button>
+                <button onClick = { this.toggleOpen }>{ text }</button>
                 {this.getBody()}
             </div>
         )
