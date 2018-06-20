@@ -15,7 +15,6 @@ export default (Component) => class WrapComponent extends ReactComponent {
   }
 
   toggleOpen = () => {
-    debugger;
     this.setState({
       isOpen: !this.state.isOpen,
     })

@@ -1,22 +1,16 @@
 import React, {Component} from 'react'
+
 import CommentList from './CommentList'
+import toggleOpen from './decorators/toggleOpen';
 
-export default class Article extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            isOpen: true
-        }
-    }
+class Article extends Component {
 
     render() {
-        const {article} = this.props
-        const {isOpen} = this.state
+        const {article, isOpen, toggleOpen} = this.props
         return (
             <div>
                 <h3>{article.title}</h3>
-                <button onClick = {this.toggleOpen}>
+                <button onClick = {toggleOpen}>
                     {isOpen ? 'close' : 'open'}
                 </button>
                 {this.getBody()}
@@ -25,8 +19,8 @@ export default class Article extends Component {
     }
 
     getBody() {
-        if (!this.state.isOpen) return null
-        const {article} = this.props
+        const {article, isOpen} = this.props
+        if (!isOpen) return null
         return (
             <section>
                {article.text}
@@ -34,12 +28,6 @@ export default class Article extends Component {
             </section>
         )
     }
-
-    toggleOpen = (ev) => {
-        ev.preventDefault()
-        console.log('---', ev.nativeEvent)
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
-    }
 }
+
+export default toggleOpen(Article);
