@@ -27,5 +27,4 @@ function getBody(props) {
     )
 }
 
-
 export default toggleOpen(CommentList)
