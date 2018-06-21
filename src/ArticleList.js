@@ -1,23 +1,18 @@
-import React, { Component } from 'react'
-import Article from './Article'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-export default class ArticleList extends Component {
+import Article from './Article';
+import accordion from './decorators/accardion';
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            openArticleId: null,
-        }
-    }
+class ArticleList extends Component {
 
     render() {
-        const {articles} = this.props;
+        const {articles = [], openArticleId, toggleOpenArticle} = this.props;
         const articleElements = articles.map(article => <li key = {article.id}>
                 <Article
                     article = {article}
-                    isOpen = {this.state.openArticleId === article.id}
-                    toggleOpen = {this.toggleOpenArticle.bind(this, article.id)}
+                    isOpen = {openArticleId === article.id}
+                    toggleOpen = {toggleOpenArticle(article.id)}
                 />
             </li>)
 
@@ -27,10 +22,12 @@ export default class ArticleList extends Component {
             </ul>
         )
     }
-
-    toggleOpenArticle(articleId) {
-        this.setState({
-            openArticleId: articleId,
-        })
-    }
 }
+
+ArticleList.propTypes = {
+    articles: PropTypes.array.isRequired,
+    openArticleId: PropTypes.string,
+    toggleOpenArticle: PropTypes.func.isRequired
+}
+
+export default accordion(ArticleList);
