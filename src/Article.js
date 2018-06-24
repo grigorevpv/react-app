@@ -1,22 +1,26 @@
-import React, {Component} from 'react'
-import CommentList from './CommentList'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-export default class Article extends Component {
-    constructor(props) {
-        super(props)
+import CommentList from './CommentList';
 
-        this.state = {
-            isOpen: true
-        }
+class Article extends Component {
+
+    static propTypes = {
+        article: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired
+        }).isRequired,
+        isOpen: PropTypes.bool.isRequired,
+        toggleOpen: PropTypes.func.isRequired,
     }
 
     render() {
-        const {article} = this.props
-        const {isOpen} = this.state
+        const {article, isOpen, toggleOpen} = this.props;
         return (
             <div>
-                <h3>{article.title}</h3>
-                <button onClick = {this.toggleOpen}>
+                <h3>{article.title} </h3>
+                <button onClick = {toggleOpen}>
                     {isOpen ? 'close' : 'open'}
                 </button>
                 {this.getBody()}
@@ -25,21 +29,19 @@ export default class Article extends Component {
     }
 
     getBody() {
-        if (!this.state.isOpen) return null
-        const {article} = this.props
+        const {article, isOpen} = this.props
+        if (!isOpen) return null
         return (
             <section>
                {article.text}
-               <CommentList comments = {article.comments}/>
+               <CommentList ref = {this.setCommentRefs} comments = {article.comments}/>
             </section>
         )
     }
 
-    toggleOpen = (ev) => {
-        ev.preventDefault()
-        console.log('---', ev.nativeEvent)
-        this.setState({
-            isOpen: !this.state.isOpen
-        })
+    setCommentRefs = ref => {
+        console.log('---->', ref);
     }
 }
+
+export default Article;
