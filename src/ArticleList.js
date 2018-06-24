@@ -6,6 +6,12 @@ import accordion from './decorators/accardion';
 
 class ArticleList extends Component {
 
+    static propTypes = {
+        articles: PropTypes.array.isRequired,
+        openArticleId: PropTypes.string,
+        toggleOpenArticle: PropTypes.func.isRequired
+    }
+
     render() {
         const {articles = [], openArticleId, toggleOpenArticle} = this.props;
         const articleElements = articles.map(article => <li key = {article.id}>
@@ -22,12 +28,6 @@ class ArticleList extends Component {
             </ul>
         )
     }
-}
-
-ArticleList.propTypes = {
-    articles: PropTypes.array.isRequired,
-    openArticleId: PropTypes.string,
-    toggleOpenArticle: PropTypes.func.isRequired
 }
 
 export default accordion(ArticleList);
