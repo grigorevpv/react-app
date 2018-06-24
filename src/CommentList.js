@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import Comment from './Comment'
+import Comment from './Comment';
+import CommentForm from './CommentForm';
 import toggleOpen from './decorators/toggleOpen';
 
 function CommentList({comments = [], isOpen, toggleOpen}) {
@@ -19,6 +20,7 @@ function CommentList({comments = [], isOpen, toggleOpen}) {
         <div>
             <button onClick = {toggleOpen}>{ text }</button>
             {getBody({isOpen, comments})}
+            <CommentForm />
         </div>
     )
 }
