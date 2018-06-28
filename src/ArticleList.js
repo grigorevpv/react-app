@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import Article from './Article';
 import accordion from './decorators/accardion';
 
@@ -13,8 +15,9 @@ class ArticleList extends Component {
     }
 
     render() {
-        const {articles = [], openArticleId, toggleOpenItem} = this.props;
-        const articleElements = articles.map(article => <li key = {article.id}>
+        const {articleList, openArticleId, toggleOpenItem} = this.props;
+        debugger;
+        const articleElements = articleList.map(article => <li key = {article.id}>
                 <Article
                     article = {article}
                     isOpen = {openArticleId === article.id}
@@ -30,4 +33,11 @@ class ArticleList extends Component {
     }
 }
 
-export default accordion(ArticleList);
+function mapStateProps(state) {
+    debugger;
+    return {
+        articleList: state.articlesState,
+    }
+}
+
+export default connect(mapStateProps)(accordion(ArticleList));
