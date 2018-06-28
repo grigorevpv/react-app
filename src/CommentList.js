@@ -5,24 +5,17 @@ import CommentForm from './CommentForm';
 import toggleOpen from './decorators/toggleOpen';
 
 function CommentList({comments = [], isOpen, toggleOpen}) {
-    render() {
-        const text = this.state.isOpen ? 'hide comments' : 'show comments'
+    render()
+    {
+        const text = isOpen ? 'hide comments' : 'show comments'
         return (
             <div>
-                <button onClick = { this.toggleOpen }>{ text }</button>
-                {this.getBody()}
+                <button onClick = {toggleOpen}>{ text }</button>
+                {getBody({isOpen, comments})}
+                <CommentForm />
             </div>
         )
     }
-
-    const text = isOpen ? 'hide comments' : 'show comments'
-    return (
-        <div>
-            <button onClick = {toggleOpen}>{ text }</button>
-            {getBody({isOpen, comments})}
-            <CommentForm />
-        </div>
-    )
 }
 
 function getBody(props) {
