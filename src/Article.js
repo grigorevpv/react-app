@@ -29,8 +29,8 @@ class Article extends Component {
     }
 
     getBody() {
-        const {article, isOpen} = this.props
-        if (!isOpen) return null
+        const {article, isOpen} = this.props;
+        if (!isOpen) return null;
         return (
             <section>
                {article.text}
