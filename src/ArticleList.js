@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 
 import Article from './Article';
 import accordion from './decorators/accardion';
+import * as filterAction from './actions/FilterActions';
 
 class ArticleList extends Component {
 
     static propTypes = {
-        articles: PropTypes.array.isRequired,
+        articleList: PropTypes.array.isRequired,
         openArticleId: PropTypes.string,
         toggleOpenItem: PropTypes.func.isRequired
     }
 
     render() {
+        const { setFilter } = this.props.pageAction;
         const {articleList, openArticleId, toggleOpenItem} = this.props;
-        debugger;
         const articleElements = articleList.map(article => <li key = {article.id}>
                 <Article
                     article = {article}
@@ -27,6 +29,7 @@ class ArticleList extends Component {
 
         return(
             <ul>
+                <button onClick={setFilter.bind(this, [])}>Click me</button>
                 {articleElements}
             </ul>
         )
@@ -34,10 +37,15 @@ class ArticleList extends Component {
 }
 
 function mapStateProps(state) {
-    debugger;
     return {
-        articleList: state.articlesState,
+        articleList: state.articles,
     }
 }
 
-export default connect(mapStateProps)(accordion(ArticleList));
+function mapDispatchToProps(dispatch){
+    return {
+        pageAction: bindActionCreators(filterAction, dispatch)
+    }
+}
+
+export default connect(mapStateProps, mapDispatchToProps)(accordion(ArticleList));
