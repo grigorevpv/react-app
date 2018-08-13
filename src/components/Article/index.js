@@ -5,16 +5,17 @@ import CommentList from '../CommentList'
 import { CSSTransitionGroup } from 'react-transition-group'
 import './style.css'
 
-class Article extends PureComponent {
-    static propTypes = {
-        article: PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            title: PropTypes.string.isRequired,
-            text: PropTypes.string
-        }).isRequired,
-        isOpen: PropTypes.bool,
-        toggleOpen: PropTypes.func
-    }
+class Article extends Component {
+    // static propTypes = {
+    //     article: PropTypes.shape({
+    //         id: PropTypes.string.isRequired,
+    //         title: PropTypes.string.isRequired,
+    //         text: PropTypes.string
+    //     }).isRequired,
+    //     isOpen: PropTypes.bool,
+    //     toggleOpen: PropTypes.func,
+    //     toggleDelete: PropsTypes.object
+    // }
 
     state = {
         updateIndex: 0
@@ -27,12 +28,15 @@ class Article extends PureComponent {
 */
 
     render() {
-        const {article, isOpen, toggleOpen} = this.props
+        const {article, isOpen, toggleOpen, toggleDelete} = this.props
         return (
             <div ref = {this.setContainerRef}>
                 <h3>{article.title}</h3>
                 <button onClick = {toggleOpen}>
                     {isOpen ? 'close' : 'open'}
+                </button>
+                <button onClick = {this.handleDelete}>
+                    Delete
                 </button>
                 <CSSTransitionGroup
                     transitionName = 'article'
@@ -53,9 +57,14 @@ class Article extends PureComponent {
 //        console.log('---', ref)
     }
 
+    handleDelete = () => {
+        const {toggleDelete, article} = this.props;
+        console.log('article id = ' + article.id);
+        toggleDelete(article.id);
+    }
+
     getBody() {
         const {article, isOpen} = this.props
-        console.log('---', 'update')
         if (!isOpen) return null
         return (
             <section>

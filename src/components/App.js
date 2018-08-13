@@ -20,7 +20,7 @@ class App extends Component {
                 <Counter />
                 <UserForm />
                 <Filters articles = {articles} />
-                <ArticleList articles = {articles} defaultOpenId = {articles[0].id}/>
+                <ArticleList defaultOpenId = {articles[0].id}/>
                 <ArticlesChart articles = {articles} />
             </div>
         )
