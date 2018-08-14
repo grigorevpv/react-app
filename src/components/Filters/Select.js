@@ -15,15 +15,12 @@ class SelectFilter extends Component {
 
     handleChange = selected => {
         const {changeSelect} = this.props;
-        changeSelect({selected})
+        changeSelect(selected)
     };
 
     render() {
-        const { selected } = this.props.selected;
+        const selected = this.props.selected;
         const { articles } = this.props;
-        console.log(selected);
-        console.log(articles);
-        debugger;
         const options = articles.map(article => ({
             label: article.title,
             value: article.id

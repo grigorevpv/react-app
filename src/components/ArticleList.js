@@ -7,6 +7,8 @@ import { deleteArticle } from '../AC';
 
 class ArticleList extends Component {
     static propTypes = {
+        // from store
+        filters: PropTypes.object.isRequired,
         articles: PropTypes.array.isRequired,
         //from accordion
         openItemId: PropTypes.string,
@@ -14,16 +16,16 @@ class ArticleList extends Component {
         deleteArticle: PropTypes.func.isRequired
     }
     render() {
-        const { articles, openItemId, toggleOpenItem, deleteArticle } = this.props;
-        console.log(deleteArticle);
-        const articleElements = articles.map(article => <li key={article.id}>
-            <Article
-                article = {article}
-                isOpen = {article.id === openItemId}
-                toggleOpen = {toggleOpenItem(article.id)}
-                toggleDelete = {deleteArticle}
-            />
-        </li>)
+        const {articles, filters, openItemId, deleteArticle, toggleOpenItem} = this.props;
+        const articleElements = this.filterArticle(articles, filters).map(article => 
+            <li key={article.id}>
+                <Article
+                    article = {article}
+                    isOpen = {article.id === openItemId}
+                    toggleOpen = {toggleOpenItem(article.id)}
+                    toggleDelete = {deleteArticle}
+                />
+            </li>);
 
         return (
             <ul>
@@ -31,8 +33,25 @@ class ArticleList extends Component {
             </ul>
         )
     }
+    filterArticle = (articles, filters) => {
+        const selectedArticles = filters.articles;
+        const range = filters.dateRange;
+        console.log(range.from + range.to);
+        return articles.filter(article => {
+            if (!(selectedArticles.length || (range.from && range.to))) {
+                return true;
+            }
+            if (selectedArticles.length || !(range.from && range.to)) {
+                return selectedArticles.some(selectArticle => selectArticle.label === article.title);
+            }
+            if (!selectedArticles.length || (range.from && range.to)) {
+                return (new Date(article.date) >= new Date(range.from) && new Date(article.date) <= new Date(range.to));
+            }
+        });
+    }
 }
 
 export default connect((state) => ({
-    articles: state.articles
+    articles: state.articles,
+    filters: state.filters
 }), {deleteArticle})(accordion(ArticleList));
