@@ -11,9 +11,15 @@ export function decrement() {
 }
 
 export function deleteArticle(id) {
-    console.log('try delete article');
     return {
         type: 'DELETE_ARTICLE',
-        payload: id
+        payload: {id}
+    }
+}
+
+export function setFilter(filter) {
+    return {
+        type: 'SET_FILTER',
+        payload: {filter}
     }
 }
