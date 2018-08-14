@@ -17,9 +17,16 @@ export function deleteArticle(id) {
     }
 }
 
-export function setFilter(filter) {
+export function changeDateRange(dateRange) {
     return {
-        type: 'SET_FILTER',
-        payload: {filter}
+        type: 'CHANGE_DATE_RANGE',
+        payload: {dateRange}
+    }
+}
+
+export function changeSelect(articles) {
+    return {
+        type: 'CHANGE_SELECT',
+        payload: {articles}
     }
 }

@@ -1,4 +1,4 @@
-const defaultState = {
+const defaultFilters = {
   articles: [],
   dateRange: {
     from: null,
@@ -6,14 +6,14 @@ const defaultState = {
   }
 }
 
-export default (state = defaultState, action) => {
-  const {type} = action;
-  debugger;
+export default (filters = defaultFilters, action) => {
+  const {type, payload} = action;
   switch(type) {
-    case 'SET_FILTER': 
-      {console.log('try set filter');
-      return state;}
-  }
+    case 'CHANGE_DATE_RANGE': 
+      return {...filters, dateRange: payload.dateRange}
+    case 'CHANGE_SELECT':
+      return {...filters, articles: payload.articles}
+    }
 
-  return state;
+  return filters;
 }
