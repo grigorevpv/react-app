@@ -34,7 +34,7 @@ class ArticleList extends Component {
         )
     }
     filterArticle = (articles, filters) => {
-        const selectedArticles = filters.articles;
+        const selectedArticles = filters.selected;
         const range = filters.dateRange;
         console.log(range.from + range.to);
         return articles.filter(article => {
@@ -51,7 +51,19 @@ class ArticleList extends Component {
     }
 }
 
-export default connect((state) => ({
-    articles: state.articles,
-    filters: state.filters
-}), {deleteArticle})(accordion(ArticleList));
+export default connect(({articles, filters}) => {
+    const {selected, dateRange: {from, to}} = filters;
+
+    console.log(selected);
+    console.log(selected.includes("Hello my new world"));
+
+    // const art = articles.filter(article => {
+    //     return ((selectedArticle.length && selectedArticle.include(article.id)) || 
+    //             (dateRange.from && dateRange.to && article.date >= dateRange.from && article.id <= dateRange.to))
+    // })
+
+    return {
+        articles,
+        filters
+    }
+}, {deleteArticle})(accordion(ArticleList));

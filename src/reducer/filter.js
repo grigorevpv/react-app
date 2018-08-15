@@ -1,5 +1,5 @@
 const defaultFilters = {
-  articles: [],
+  selected: [],
   dateRange: {
     from: null,
     to: null
@@ -12,7 +12,7 @@ export default (filters = defaultFilters, action) => {
     case 'CHANGE_DATE_RANGE': 
       return {...filters, dateRange: payload.dateRange}
     case 'CHANGE_SELECT':
-      return {...filters, articles: payload.articles}
+      return {...filters, selected: payload.articles}
     }
 
   return filters;
