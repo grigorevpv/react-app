@@ -16,8 +16,8 @@ class ArticleList extends Component {
         deleteArticle: PropTypes.func.isRequired
     }
     render() {
-        const {articles, filters, openItemId, deleteArticle, toggleOpenItem} = this.props;
-        const articleElements = this.filterArticle(articles, filters).map(article => 
+        const {articles, openItemId, deleteArticle, toggleOpenItem} = this.props;
+        const articleElements = articles.map(article => 
             <li key={article.id}>
                 <Article
                     article = {article}
@@ -33,34 +33,18 @@ class ArticleList extends Component {
             </ul>
         )
     }
-    filterArticle = (articles, filters) => {
-        const selectedArticles = filters.selected;
-        const range = filters.dateRange;
-        console.log(range.from + range.to);
-        return articles.filter(article => {
-            if (!(selectedArticles.length || (range.from && range.to))) {
-                return true;
-            }
-            if (selectedArticles.length || !(range.from && range.to)) {
-                return selectedArticles.some(selectArticle => selectArticle.label === article.title);
-            }
-            if (!selectedArticles.length || (range.from && range.to)) {
-                return (new Date(article.date) >= new Date(range.from) && new Date(article.date) <= new Date(range.to));
-            }
-        });
-    }
+
 }
 
 export default connect(({articles, filters}) => {
     const {selected, dateRange: {from, to}} = filters;
 
-    console.log(selected);
-    console.log(selected.includes("Hello my new world"));
+    let art = articles.filter(article => {
+        return ((selected.length && selected.includes(article.id)) || 
+                (from && to && article.date >= from && article.date <= to))
+    })
 
-    // const art = articles.filter(article => {
-    //     return ((selectedArticle.length && selectedArticle.include(article.id)) || 
-    //             (dateRange.from && dateRange.to && article.date >= dateRange.from && article.id <= dateRange.to))
-    // })
+    articles = art.length ? art : articles;
 
     return {
         articles,
