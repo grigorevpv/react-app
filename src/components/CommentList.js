@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux';
+
+
 import Comment from './Comment'
 import CommentForm from './CommentForm'
 import toggleOpen from '../decorators/toggleOpen'
 
-function CommentList({comments = [], isOpen, toggleOpen}) {
+function CommentList({comments, isOpen, toggleOpen}) {
     const text = isOpen ? 'hide comments' : 'show comments'
     return (
         <div>
@@ -40,4 +43,8 @@ function getBody({comments, isOpen}) {
     )
 }
 
-export default toggleOpen(CommentList)
+export default connect(({comments}, ownProps) => {
+    let commentsId = ownProps.commentsId || [];
+    let com = comments.filter(comment => commentsId.includes(comment.id));
+    return {comments: com}
+})(toggleOpen(CommentList))
