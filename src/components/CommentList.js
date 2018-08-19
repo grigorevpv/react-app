@@ -36,15 +36,11 @@ function getBody({comments, isOpen}) {
     return (
         <div>
             <ul>
-                {comments.map(comment => <li key={comment.id}><Comment comment={comment}/></li>)}
+                {comments.map(id => <li key={id}><Comment id={id}/></li>)}
             </ul>
             <CommentForm/>
         </div>
     )
 }
 
-export default connect(({comments}, ownProps) => {
-    let commentsId = ownProps.commentsId || [];
-    let com = comments.filter(comment => commentsId.includes(comment.id));
-    return {comments: com}
-})(toggleOpen(CommentList))
+export default toggleOpen(CommentList)

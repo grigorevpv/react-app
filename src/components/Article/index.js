@@ -70,7 +70,7 @@ class Article extends Component {
             <section>
                {article.text}
                 <button onClick = {() => this.setState({updateIndex: this.state.updateIndex + 1})}>update</button>
-               <CommentList commentsId = {article.comments} ref = {this.setCommentsRef} key = {this.state.updateIndex}/>
+               <CommentList comments = {article.comments} ref = {this.setCommentsRef} key = {this.state.updateIndex}/>
             </section>
         )
     }
