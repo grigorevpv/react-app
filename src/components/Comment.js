@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux';
 
+import {commentByIdSelector} from '../selectors';
+
 function Comment({comment}) {
     return (
         <div>
@@ -19,9 +21,4 @@ Comment.propTypes = {
     }).isRequired
 }
 
-export default connect((state, ownProps) => {
-    let {comments} = state;
-    let {id} = ownProps;
-
-    return {comment: comments[id]}
-})(Comment)
+export default connect((state, ownProps) => commentByIdSelector(state, ownProps))(Comment)
