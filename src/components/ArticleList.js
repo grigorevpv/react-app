@@ -10,7 +10,7 @@ class ArticleList extends Component {
     static propTypes = {
         // from store
         filters: PropTypes.object.isRequired,
-        articles: PropTypes.array.isRequired,
+        articles: PropTypes.object.isRequired,
         //from accordion
         openItemId: PropTypes.string,
         toggleOpenItem: PropTypes.func.isRequired,
@@ -18,15 +18,21 @@ class ArticleList extends Component {
     }
     render() {
         const {articles, openItemId, deleteArticle, toggleOpenItem} = this.props;
-        const articleElements = articles.map(article => 
-            <li key={article.id}>
+        const articleElements = [];
+
+        for (let key of Object.keys(articles)) {
+            let article = articles[key];
+            articleElements.push(
+                <li key={key}>
                 <Article
                     article = {article}
-                    isOpen = {article.id === openItemId}
-                    toggleOpen = {toggleOpenItem(article.id)}
+                    isOpen = {key === openItemId}
+                    toggleOpen = {toggleOpenItem(key)}
                     toggleDelete = {deleteArticle}
-                />
-            </li>);
+                    />
+                </li>
+            )
+        }
 
         return (
             <ul>

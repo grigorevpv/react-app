@@ -7,13 +7,16 @@ const commentIdGetter = (state, ownProps) => ownProps.id;
 
 export const filtratedArticlesSelector = createSelector(articlesGetter, filtersGetter, (articles, filters) => {
   const {selected, dateRange: {from, to}} = filters;
+  let art = {};
+  for (let key of Object.keys(articles)) {
+    let article = articles[key];
+    let date = new Date(article.date);
+    if ((selected.length && selected.includes(key)) || (from && to && date >= from && date <= to)) {
+        art[key] = article;
+    }
+  }
 
-  let art = articles.filter(article => {
-      return ((selected.length && selected.includes(article.id)) || 
-              (from && to && article.date >= from && article.date <= to))
-  })
-
-  articles = art.length ? art : articles;
+  articles = art.size ? art : articles;
 
   return {
       articles,
