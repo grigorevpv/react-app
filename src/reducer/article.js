@@ -13,10 +13,10 @@ export default (state = articleMap, action) => {
 
     switch(type) {
         case DELETE_ARTICLE:
-            debugger;
+            let artState = {...state};
             let id = payload.id;
-            delete state[id];
-            return state;
+            delete artState[id];
+            return artState;
     }
 
     return state;
