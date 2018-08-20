@@ -18,6 +18,7 @@ class ArticleList extends Component {
     }
     render() {
         const {articles, openItemId, deleteArticle, toggleOpenItem} = this.props;
+        debugger;
         const articleElements = [];
 
         for (let key of Object.keys(articles)) {
