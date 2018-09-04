@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 
 const filtersGetter = state => state.filters;
-const articlesGetter = state => {debugger; return state.articles};
+const articlesGetter = state => state.articles;
 const commentsGetter = state => state.comments;
 const commentIdGetter = (state, ownProps) => ownProps.id;
 

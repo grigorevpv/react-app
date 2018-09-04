@@ -1,4 +1,4 @@
-import { DELETE_ARTICLE } from '../constants';
+import { DELETE_ARTICLE, ADD_COMMENT } from '../constants';
 
 import { normalizedArticles } from '../fixtures';
 
@@ -14,9 +14,15 @@ export default (state = articleMap, action) => {
     switch(type) {
         case DELETE_ARTICLE:
             let artState = {...state};
-            let id = payload.id;
-            delete artState[id];
+            let artId = payload.id;
+            delete artState[artId];
             return artState;
+        case ADD_COMMENT:
+            const {articleId, id} = payload.comment;
+            debugger;
+            let data = {...state, [articleId]: {...state[articleId], comments: [...state[articleId].comments, id]}};
+            debugger;
+            return data;
     }
 
     return state;
